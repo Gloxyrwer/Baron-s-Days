@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
     private Transform player;
     private Camera cam;
     private float cameraHalfWidth;
+    private float offsetX;
 
     private void Awake()
     {
@@ -19,10 +20,14 @@ public class CameraController : MonoBehaviour
         float cameraLeftBoundary = transform.position.x - cameraHalfWidth;
         float cameraRightBoundary = transform.position.x + cameraHalfWidth;
 
-        if (playerX < cameraLeftBoundary || playerX > cameraRightBoundary)
+        if (playerX < cameraLeftBoundary)
         {
-            float offsetX = playerX - transform.position.x;
-
+            offsetX = cameraLeftBoundary - cameraRightBoundary;
+            transform.Translate(new Vector3(offsetX, 0f, 0f));
+        }
+        else if (playerX > cameraRightBoundary)
+        {
+            offsetX = cameraRightBoundary - cameraLeftBoundary;
             transform.Translate(new Vector3(offsetX, 0f, 0f));
         }
     }
