@@ -9,6 +9,8 @@ public class PlayerLife : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerShooting playerShooting;
     [SerializeField] private AudioSource deathSound;
+    private bool _isDie;
+    public bool IsDie => _isDie;
 
     [SerializeField] private GameObject deathScreen;
 
@@ -22,6 +24,7 @@ public class PlayerLife : MonoBehaviour
 
     private void Start()
     {
+        _isDie = false;
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
     }
 
@@ -29,6 +32,7 @@ public class PlayerLife : MonoBehaviour
     {
         DisableComponents();
         StopMovement();
+        _isDie = true;
         gm.deathsValue++;
         deathSound.Play();
         StartCoroutine(TurnDeathScreenAfterAnim());
